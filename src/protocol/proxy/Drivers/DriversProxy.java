@@ -37,4 +37,9 @@ public class DriversProxy implements ProxyInterface<Drivers> {
     public void getItensQuantity() {
 
     }
+
+    @Override
+    public Drivers findBy(String value) {
+        return null;
+    }
 }

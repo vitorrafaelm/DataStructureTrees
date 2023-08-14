@@ -26,8 +26,8 @@ public class DriversOperations implements GeneralInterface<Drivers> {
     }
 
     @Override
-    public void findElement() {
-
+    public Drivers findElement(String value) {
+        return null;
     }
 
     @Override
@@ -41,8 +41,8 @@ public class DriversOperations implements GeneralInterface<Drivers> {
     }
 
     @Override
-    public void getQuantity() {
-
+    public int getQuantity() {
+        return 1;
     }
 
     @Override

@@ -6,6 +6,7 @@ public interface ProxyInterface<T> {
     T list(T node);
     T update(T node);
     void insert(T node);
-
     void getItensQuantity();
+
+    T findBy(String value);
 }

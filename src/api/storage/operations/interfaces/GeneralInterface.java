@@ -5,9 +5,9 @@ public interface GeneralInterface<T> {
     void getTree();
     void getTreePreOrder();
     void getTreePosOrder();
-    void findElement();
+    T findElement(String value);
     void DeleteElement();
     void insertElement(T Node);
-    void getQuantity();
+    int getQuantity();
     void listAll();
 }

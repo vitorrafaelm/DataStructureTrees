@@ -36,6 +36,10 @@ public class VehiclesProxy implements ProxyInterface<Vehicles> {
     }
     @Override
     public void getItensQuantity() {
-
+        System.out.println(vehicleOperations.getQuantity());
+    }
+    @Override
+    public Vehicles findBy(String value) {
+        return vehicleOperations.findElement(value);
     }
 }

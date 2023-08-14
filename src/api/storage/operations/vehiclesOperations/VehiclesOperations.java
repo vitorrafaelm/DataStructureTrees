@@ -23,8 +23,8 @@ public class VehiclesOperations implements GeneralInterface<Vehicles> {
     }
 
     @Override
-    public void findElement() {
-
+    public Vehicles findElement(String value) {
+        return vehiclesTree.search(Long.parseLong(value)).getVehicle();
     }
 
     @Override
@@ -38,8 +38,8 @@ public class VehiclesOperations implements GeneralInterface<Vehicles> {
     }
 
     @Override
-    public void getQuantity() {
-
+    public int getQuantity() {
+        return vehiclesTree.countNodes();
     }
 
     @Override

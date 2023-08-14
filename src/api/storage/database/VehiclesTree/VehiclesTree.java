@@ -28,6 +28,37 @@ public class VehiclesTree {
         }
     }
 
+    public VehiclesNode search(Long k) {
+        return this.search(getRoot(), k);
+    }
+
+    private VehiclesNode search(VehiclesNode r, Long k) {
+        if(r == null)
+            return null;
+
+        else if(k < r.getKey())
+            return this.search(r.getLeft(), k);
+
+        else if(k > r.getKey())
+            return this.search(r.getRight(), k);
+
+        else
+            return r;
+    }
+
+    public Integer countNodes() {
+        return this.countNodes(this.getRoot());
+    }
+
+    private Integer countNodes(VehiclesNode r) {
+
+        if(r == null)
+            return 0;
+        else
+            return 1 + countNodes(r.left) + countNodes(r.right);
+
+    }
+
     private Integer height(VehiclesNode node) {
         if(node == null) return -1;
         return node.heightNode;
