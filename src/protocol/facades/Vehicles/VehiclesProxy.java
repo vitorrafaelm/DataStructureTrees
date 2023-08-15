@@ -1,28 +1,32 @@
-package protocol.proxy.Vehicles;
+package protocol.facades.Vehicles;
 
 import api.exposed.VehiclesOperations.VehicleOperations;
-import api.storage.database.VehiclesTree.VehiclesNode;
 import api.storage.models.Vehicles;
 import api.storage.operations.vehiclesOperations.VehiclesOperations;
-import protocol.interfaces.ProxyInterface;
+import protocol.interfaces.FacadeInterface;
 
-public class VehiclesProxy implements ProxyInterface<Vehicles> {
+public class VehiclesProxy implements FacadeInterface<Vehicles> {
 
     VehiclesOperations vehicleOperations = new VehicleOperations().getOperations();
 
     @Override
-    public void search(Vehicles node) {
+    public void listOrder() {
         vehicleOperations.getTree();
     }
 
     @Override
-    public Vehicles delete(Vehicles node) {
-        return null;
+    public void listPreOrder() {
+        vehicleOperations.getTreePreOrder();
     }
 
     @Override
-    public Vehicles list(Vehicles node) {
-        return null;
+    public void listPosOrder() {
+        vehicleOperations.getTreePosOrder();
+    }
+
+    @Override
+    public void delete(Vehicles node) {
+        vehicleOperations.DeleteElement(node.getReindeer());
     }
 
     @Override

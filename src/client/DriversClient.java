@@ -1,9 +1,7 @@
 package client;
 
 import api.storage.models.Drivers;
-import protocol.proxy.Drivers.DriversProxy;
-
-import java.util.Random;
+import protocol.facades.Drivers.DriversProxy;
 
 public class DriversClient {
 

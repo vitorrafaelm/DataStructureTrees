@@ -28,6 +28,32 @@ public class VehiclesTree {
         }
     }
 
+    public void preOrdem() {
+        this.preOrdem(getRoot());
+    }
+
+    private void preOrdem(VehiclesNode node) {
+        if(node != null) {
+            System.out.println(node.getVehicle());
+            this.preOrdem(node.left);
+            this.preOrdem(node.right);
+        }
+    }
+
+    public void posOrdem() {
+        this.posOrdem(getRoot());
+    }
+
+    private void posOrdem(VehiclesNode node) {
+
+        if(node != null) {
+            this.posOrdem(node.left);
+            this.posOrdem(node.right);
+            System.out.println(node.getVehicle());
+        }
+
+    }
+
     public VehiclesNode search(Long k) {
         return this.search(getRoot(), k);
     }
@@ -80,7 +106,6 @@ public class VehiclesTree {
     }
 
     private VehiclesNode insert(VehiclesNode node, Long key, Vehicles vehicles) {
-
         if(node == null) return new VehiclesNode(key, vehicles);
 
         if(node.compareTo(key) > 0) {
@@ -93,6 +118,40 @@ public class VehiclesTree {
 
         node.heightNode = 1 + this.greater(this.height(node.getLeft()), this.height(node.getRight()));
 
+        return rebalance(node);
+    }
+
+    public void delete(Long k) {
+        this.root = this.delete(getRoot(), k);
+    }
+
+    private VehiclesNode delete(VehiclesNode node, Long key) {
+        if (node == null) {
+            return node;
+        } else if (node.compareTo(key) > 0) {
+            node.left = delete(node.left, key);
+        } else if (node.compareTo(key) < 0) {
+            node.right = delete(node.right, key);
+        } else {
+            if (node.left == null || node.right == null) {
+                node = (node.left == null) ? node.right : node.left;
+            } else {
+                VehiclesNode mostLeftChild = mostLeftChild(node.right);
+                node.key = mostLeftChild.key;
+                node.right = delete(node.right, node.key);
+            }
+        }
+        if (node != null) {
+            node = rebalance(node);
+        }
+        return node;
+    }
+
+    private VehiclesNode mostLeftChild(VehiclesNode node) {
+        return node.getRight() == null ? node : mostLeftChild(node.getLeft());
+    }
+
+    VehiclesNode rebalance(VehiclesNode node) {
         int fb = this.getBalancingFactor(node);
         int fbEsq = this.getBalancingFactor(node.getLeft());
         int fbDir = this.getBalancingFactor(node.getRight());

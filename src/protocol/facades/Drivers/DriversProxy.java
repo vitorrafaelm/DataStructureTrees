@@ -1,26 +1,31 @@
-package protocol.proxy.Drivers;
+package protocol.facades.Drivers;
 
 import api.exposed.DriversOperations.DriverOperations;
 import api.storage.models.Drivers;
 import api.storage.operations.driversOperations.DriversOperations;
-import protocol.interfaces.ProxyInterface;
+import protocol.interfaces.FacadeInterface;
 
-public class DriversProxy implements ProxyInterface<Drivers> {
+public class DriversProxy implements FacadeInterface<Drivers> {
     DriversOperations driverOperations = new DriverOperations().getOperations();
 
     @Override
-    public void search(Drivers node) {
+    public void listOrder() {
         driverOperations.getTree();
     }
 
     @Override
-    public Drivers delete(Drivers node) {
-        return null;
+    public void listPreOrder() {
+        driverOperations.getTreePreOrder();
     }
 
     @Override
-    public Drivers list(Drivers node) {
-        return null;
+    public void listPosOrder() {
+        driverOperations.getTreePosOrder();
+    }
+
+    @Override
+    public void delete(Drivers node) {
+
     }
 
     @Override
@@ -35,11 +40,11 @@ public class DriversProxy implements ProxyInterface<Drivers> {
 
     @Override
     public void getItensQuantity() {
-
+        System.out.println(driverOperations.getQuantity());
     }
 
     @Override
     public Drivers findBy(String value) {
-        return null;
+        return driverOperations.findElement(value);
     }
 }

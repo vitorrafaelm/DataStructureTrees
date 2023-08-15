@@ -1,9 +1,10 @@
 package protocol.interfaces;
 
-public interface ProxyInterface<T> {
-    void search(T node);
-    T delete(T node);
-    T list(T node);
+public interface FacadeInterface<T> {
+    void listOrder();
+    void listPreOrder();
+    void listPosOrder();
+    void delete(T node);
     T update(T node);
     void insert(T node);
     void getItensQuantity();

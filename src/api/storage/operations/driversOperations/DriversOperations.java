@@ -31,7 +31,7 @@ public class DriversOperations implements GeneralInterface<Drivers> {
     }
 
     @Override
-    public void DeleteElement() {
+    public void DeleteElement(String key) {
 
     }
 

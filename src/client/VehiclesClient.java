@@ -2,8 +2,8 @@ package client;
 
 import api.storage.models.Drivers;
 import api.storage.models.Vehicles;
-import protocol.proxy.Drivers.DriversProxy;
-import protocol.proxy.Vehicles.VehiclesProxy;
+import protocol.facades.Drivers.DriversProxy;
+import protocol.facades.Vehicles.VehiclesProxy;
 
 public class VehiclesClient {
 
@@ -51,5 +51,9 @@ public class VehiclesClient {
 
         System.out.println(vehiclesProxy.findBy("28471886959").toString());
         vehiclesProxy.getItensQuantity();
+
+        vehiclesProxy.delete(vehicles);
+
+        vehiclesProxy.search(vehicles);
     }
 }

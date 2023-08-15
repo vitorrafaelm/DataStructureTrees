@@ -14,12 +14,12 @@ public class VehiclesOperations implements GeneralInterface<Vehicles> {
 
     @Override
     public void getTreePreOrder() {
-
+        vehiclesTree.preOrdem();
     }
 
     @Override
     public void getTreePosOrder() {
-
+        vehiclesTree.posOrdem();
     }
 
     @Override
@@ -28,8 +28,8 @@ public class VehiclesOperations implements GeneralInterface<Vehicles> {
     }
 
     @Override
-    public void DeleteElement() {
-
+    public void DeleteElement(String key) {
+        vehiclesTree.delete(Long.parseLong(key));
     }
 
     @Override
