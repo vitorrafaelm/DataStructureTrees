@@ -5,7 +5,7 @@ import api.storage.models.Vehicles;
 import api.storage.operations.vehiclesOperations.VehiclesOperations;
 import protocol.interfaces.FacadeInterface;
 
-public class VehiclesProxy implements FacadeInterface<Vehicles> {
+public class VehiclesFacade implements FacadeInterface<Vehicles> {
 
     VehiclesOperations vehicleOperations = new VehicleOperations().getOperations();
 
@@ -31,6 +31,7 @@ public class VehiclesProxy implements FacadeInterface<Vehicles> {
 
     @Override
     public Vehicles update(Vehicles node) {
+        vehicleOperations.updateVehicleInformations(node.getReindeer(), node);
         return null;
     }
 

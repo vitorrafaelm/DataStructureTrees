@@ -67,9 +67,33 @@ public class VehiclesTree {
 
         else if(k > r.getKey())
             return this.search(r.getRight(), k);
-
         else
             return r;
+    }
+
+    public VehiclesNode update(Long k, Vehicles vehicle) {
+        return this.update(getRoot(), k, vehicle);
+    }
+
+    private VehiclesNode update(VehiclesNode r, Long k, Vehicles vehicle) {
+        if (r == null) {
+            return null;
+        } else if(k < r.getKey()) {
+            return this.search(r.getLeft(), k);
+        } else if(k > r.getKey()) {
+            return this.search(r.getRight(), k);
+        } else {
+            System.out.println("ENTROU AQUI");
+            Vehicles current = r.getVehicle();
+            current.setModelName(vehicle.getModelName());
+            current.setLicensePlate(vehicle.getLicensePlate());
+            current.setDriverCPF(vehicle.getDriverCPF());
+            current.setDrivername(vehicle.getDrivername());
+
+            r.setVehicle(current);
+            return r;
+        }
+
     }
 
     public Integer countNodes() {
@@ -147,64 +171,84 @@ public class VehiclesTree {
         return node;
     }
 
+
+
     private VehiclesNode mostLeftChild(VehiclesNode node) {
         return node.getRight() == null ? node : mostLeftChild(node.getLeft());
     }
 
+    int getBalance(VehiclesNode n) {
+        return (n == null) ? 0 : height(n.right) - height(n.left);
+    }
+
     VehiclesNode rebalance(VehiclesNode node) {
-        int fb = this.getBalancingFactor(node);
-        int fbEsq = this.getBalancingFactor(node.getLeft());
-        int fbDir = this.getBalancingFactor(node.getRight());
-
-        if(fb > 1 && fbEsq >= 0) {
-            return this.SimpleRotateRight(node);
+        int balance = getBalance(node);
+        if (balance > 1) {
+            if (height(node.right.right) > height(node.right.left)) {
+                node = rotateLeft(node);
+            } else {
+                node.right = rotateRight(node.right);
+                node = rotateLeft(node);
+            }
+        } else if (balance < -1) {
+            if (height(node.left.left) > height(node.left.right))
+                node = rotateRight(node);
+            else {
+                node.left = rotateLeft(node.left);
+                node = rotateRight(node);
+            }
         }
-
-        if(fb > 1 && fbEsq < 0) {
-            node.left = this.SimpleRotateLeft(node.left);
-            return SimpleRotateRight(node);
-        }
-
-        if(fb < -1 && fbDir <= 0) {
-            return this.SimpleRotateLeft(node);
-        }
-
-        if(fb < -1 && fbDir > 0) {
-            node.right = this.SimpleRotateLeft(node.right);
-            return SimpleRotateRight(node);
-        }
-
         return node;
+    }
+
+    VehiclesNode rotateRight(VehiclesNode y) {
+        VehiclesNode x = y.left;
+
+        if(x == null) return x;
+
+        VehiclesNode z = x.right;
+        x.right = y;
+        y.left = z;
+        return x;
+    }
+
+    VehiclesNode rotateLeft(VehiclesNode y) {
+        VehiclesNode x = y.right;
+        if(x == null) return x;
+        VehiclesNode z = x.left != null ? x.left : null;
+        x.left = y;
+        y.right = z;
+        return x;
     }
 
     private VehiclesNode SimpleRotateLeft(VehiclesNode driver) {
 
-        VehiclesNode driverRight = driver.getRight(); // y
-        VehiclesNode driverLeft = driver.getLeft(); // z
+        VehiclesNode vehicleRight = driver.getRight(); // y
+        VehiclesNode vehicleLeft = driver.getLeft(); // z
 
-        driverRight.setLeft(driver);
-        driverLeft.setRight(driverLeft);
+        vehicleRight.setLeft(driver);
+        vehicleLeft.setRight(vehicleLeft);
 
         driver.heightNode = 1 + this.greater(this.height(driver.getLeft()), this.height(driver.getRight()));
-        driverRight.heightNode = 1 + this.greater(this.height(driverRight.getLeft()), this.height(driverRight.getRight()));
+        vehicleRight.heightNode = 1 + this.greater(this.height(vehicleRight.getLeft()), this.height(vehicleRight.getRight()));
 
-        return driverRight;
+        return vehicleRight;
     }
 
     private VehiclesNode SimpleRotateRight(VehiclesNode driver) {
 
-        VehiclesNode driverLeft = driver.getLeft();
-        VehiclesNode driverLeftRight = driverLeft.getRight();
+        VehiclesNode vehicleLeft = driver.getLeft();
+        VehiclesNode vehicleLeftRight = vehicleLeft.getRight();
 
         // executa rotação
 
-        driverLeft.setRight(driver);
-        driver.setLeft(driverLeftRight);
+        vehicleLeft.setRight(driver);
+        driver.setLeft(vehicleLeftRight);
 
         driver.heightNode = 1 + this.greater(this.height(driver.getLeft()), this.height(driver.getRight()));
-        driverLeft.heightNode = 1 + this.greater(this.height(driverLeft.getLeft()), this.height(driverLeft.getRight()));
+        vehicleLeft.heightNode = 1 + this.greater(this.height(vehicleLeft.getLeft()), this.height(vehicleLeft.getRight()));
 
-        return driverLeft;
+        return vehicleLeft;
     }
 
 }

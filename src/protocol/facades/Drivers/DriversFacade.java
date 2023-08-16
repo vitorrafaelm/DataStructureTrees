@@ -5,7 +5,7 @@ import api.storage.models.Drivers;
 import api.storage.operations.driversOperations.DriversOperations;
 import protocol.interfaces.FacadeInterface;
 
-public class DriversProxy implements FacadeInterface<Drivers> {
+public class DriversFacade implements FacadeInterface<Drivers> {
     DriversOperations driverOperations = new DriverOperations().getOperations();
 
     @Override

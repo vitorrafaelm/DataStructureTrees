@@ -2,58 +2,87 @@ package client;
 
 import api.storage.models.Drivers;
 import api.storage.models.Vehicles;
-import protocol.facades.Drivers.DriversProxy;
-import protocol.facades.Vehicles.VehiclesProxy;
+import protocol.facades.Drivers.DriversFacade;
+import protocol.facades.Vehicles.VehiclesFacade;
+
+import java.util.Random;
+import java.util.UUID;
 
 public class VehiclesClient {
 
     public static void main(String[] args) {
-        VehiclesProxy vehiclesProxy = new VehiclesProxy();
-        DriversProxy driversProxy = new DriversProxy();
+        Random gerador = new Random();
+        VehiclesFacade vehiclesFacade = new VehiclesFacade();
+        DriversFacade driversFacade = new DriversFacade();
 
         Drivers driver1 = new Drivers();
         driver1.setCPF("70463477430");
         driver1.setName("Vitor");
 
+        driversFacade.insert(driver1);
+        driversFacade.listOrder();
+
+        String uuid1 = null;
+        String uuid2 = null;
+        String uuid3 = null;
+        String uuid4 = null;
+        String uuid5 = null;
+
+
+        for (int i = 1; i <= 30; i++) {
+            Long randomNumber = Math.abs(gerador.nextLong());
+            UUID idOne = UUID.randomUUID();
+
+            if(i == 2) uuid1 = randomNumber.toString();
+            if(i == 3) uuid2 = randomNumber.toString();
+            if(i == 4) uuid3 = randomNumber.toString();
+            if(i == 5) uuid4 = randomNumber.toString();
+            if(i == 6) uuid5 = randomNumber.toString();
+
+            Vehicles vehicles = new Vehicles();
+            vehicles.setDrivername(driver1.getName());
+            vehicles.setDriverCPF(driver1.getCPF());
+            vehicles.setCreatedVehicleDate("2022-06-18");
+
+            vehicles.setReindeer(randomNumber.toString());
+            vehicles.setLicensePlate((idOne.toString()).substring(0, 3) + "2432");
+            vehicles.setModelName("celta 1.0 " + randomNumber);
+
+            vehiclesFacade.insert(vehicles);
+        }
+
+        System.out.println("Primeiras 5 consultas ---------------------------------");
+        System.out.println(vehiclesFacade.findBy(uuid1).toString());
+        System.out.println(vehiclesFacade.findBy(uuid2).toString());
+        System.out.println(vehiclesFacade.findBy(uuid3).toString());
+        System.out.println(vehiclesFacade.findBy(uuid4).toString());
+        System.out.println(vehiclesFacade.findBy(uuid5).toString());
+
+        System.out.println("Listagem em ordem -------------------------------------");
+        vehiclesFacade.listOrder();
+
+        System.out.println("Primeiro Cadastro -------------------------------------");
+        Long randomNumber = Math.abs(gerador.nextLong());
+        UUID idOne = UUID.randomUUID();
+        System.out.println(randomNumber + "print do id deletado");
         Vehicles vehicles = new Vehicles();
         vehicles.setDrivername(driver1.getName());
         vehicles.setDriverCPF(driver1.getCPF());
-
         vehicles.setCreatedVehicleDate("2022-06-18");
-        vehicles.setReindeer("28471886960");
-        vehicles.setLicensePlate("KRX2432");
-        vehicles.setModelName("celta");
 
-        Vehicles vehicles2 = new Vehicles();
-        vehicles2.setDrivername(driver1.getName());
-        vehicles2.setDriverCPF(driver1.getCPF());
+        vehicles.setReindeer(randomNumber.toString());
+        vehicles.setLicensePlate((idOne.toString()).substring(0, 3) + "2432");
+        vehicles.setModelName("celta 1.0 " + randomNumber);
 
-        vehicles2.setCreatedVehicleDate("2022-06-18");
-        vehicles2.setReindeer("28471886962");
-        vehicles2.setLicensePlate("KRX2435");
-        vehicles2.setModelName("celta");
+        vehiclesFacade.insert(vehicles);
 
-        Vehicles vehicles3 = new Vehicles();
-        vehicles3.setDrivername(driver1.getName());
-        vehicles3.setDriverCPF(driver1.getCPF());
+        System.out.println("Listagem em ordem após primeiro cadastro -------------------------------------");
+        vehiclesFacade.listOrder();
 
-        vehicles3.setCreatedVehicleDate("2022-06-18");
-        vehicles3.setReindeer("28471886959");
-        vehicles3.setLicensePlate("KRX2430");
-        vehicles3.setModelName("celta");
+        System.out.println("Primeira deleção -------------------------------------");
+        vehiclesFacade.delete(vehicles);
 
-        driversProxy.search(driver1);
-        vehiclesProxy.insert(vehicles);
-        vehiclesProxy.insert(vehicles2);
-        vehiclesProxy.insert(vehicles3);
-
-        vehiclesProxy.search(vehicles);
-
-        System.out.println(vehiclesProxy.findBy("28471886959").toString());
-        vehiclesProxy.getItensQuantity();
-
-        vehiclesProxy.delete(vehicles);
-
-        vehiclesProxy.search(vehicles);
+        System.out.println("Listagem em ordem após primeira deleção -------------------------------------");
+        vehiclesFacade.listOrder();
     }
 }

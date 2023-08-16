@@ -46,7 +46,7 @@ public class DriversOperations implements GeneralInterface<Drivers> {
     }
 
     @Override
-    public void listAll() {
+    public void updateVehicleInformations(String key, Drivers item) {
 
     }
 }

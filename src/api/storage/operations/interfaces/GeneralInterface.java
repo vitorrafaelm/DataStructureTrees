@@ -9,5 +9,6 @@ public interface GeneralInterface<T> {
     void DeleteElement(String key);
     void insertElement(T Node);
     int getQuantity();
-    void listAll();
+
+    void updateVehicleInformations(String key, T item);
 }
