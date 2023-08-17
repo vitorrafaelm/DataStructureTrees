@@ -1,6 +1,5 @@
 package api.storage.database.generic;
 
-import api.storage.database.VehiclesTree.VehiclesNode;
 import api.storage.models.Vehicles;
 
 public class Tree<T> {
