@@ -1,14 +1,15 @@
 package api.storage.operations.interfaces;
 
+import api.storage.database.generic.Node;
+
 public interface GeneralInterface<T> {
 
-    void getTree();
+    void getTreeOrder();
     void getTreePreOrder();
     void getTreePosOrder();
-    T findElement(String value);
-    void DeleteElement(String key);
-    void insertElement(T Node);
+    Node<T> findElement(Integer key);
+    void DeleteElement(Integer key);
+    void insertElement(T value);
     int getQuantity();
-
-    void updateVehicleInformations(String key, T item);
+    void updateVehicleInformations(Integer key, T valueToUpdate);
 }

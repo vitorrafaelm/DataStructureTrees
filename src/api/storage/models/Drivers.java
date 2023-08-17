@@ -21,5 +21,11 @@ public class Drivers {
         this.CPF = CPF;
     }
 
-
+    @Override
+    public String toString() {
+        return "Drivers{" +
+                "name='" + name + '\'' +
+                ", CPF='" + CPF + '\'' +
+                '}';
+    }
 }

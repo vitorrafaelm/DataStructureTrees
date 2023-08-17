@@ -16,7 +16,7 @@ public class VehiclesClient {
         DriversFacade driversFacade = new DriversFacade();
 
         Drivers driver1 = new Drivers();
-        driver1.setCPF("70463477430");
+        driver1.setCPF("704634");
         driver1.setName("Vitor");
 
         driversFacade.insert(driver1);
@@ -29,8 +29,8 @@ public class VehiclesClient {
         String uuid5 = null;
 
 
-        for (int i = 1; i <= 30; i++) {
-            Long randomNumber = Math.abs(gerador.nextLong());
+        for (Integer i = 1; i <= 50; i++) {
+            Integer randomNumber = Math.abs(gerador.nextInt());
             UUID idOne = UUID.randomUUID();
 
             if(i == 2) uuid1 = randomNumber.toString();
@@ -51,20 +51,22 @@ public class VehiclesClient {
             vehiclesFacade.insert(vehicles);
         }
 
-        System.out.println("Primeiras 5 consultas ---------------------------------");
-        System.out.println(vehiclesFacade.findBy(uuid1).toString());
-        System.out.println(vehiclesFacade.findBy(uuid2).toString());
-        System.out.println(vehiclesFacade.findBy(uuid3).toString());
-        System.out.println(vehiclesFacade.findBy(uuid4).toString());
-        System.out.println(vehiclesFacade.findBy(uuid5).toString());
+        System.out.println("5 searches ---------------------------------");
+        vehiclesFacade.findBy(uuid1.toString());
+        vehiclesFacade.findBy(uuid2.toString());
+        vehiclesFacade.findBy(uuid3.toString());
+        vehiclesFacade.findBy(uuid4.toString());
+        vehiclesFacade.findBy(uuid5.toString());
 
-        System.out.println("Listagem em ordem -------------------------------------");
+        System.out.println("List in Order -------------------------------------");
         vehiclesFacade.listOrder();
 
-        System.out.println("Primeiro Cadastro -------------------------------------");
-        Long randomNumber = Math.abs(gerador.nextLong());
+        System.out.println("Insert first register and get Quantity and List -------------------------------------");
+        Integer randomNumber = Math.abs(gerador.nextInt());
         UUID idOne = UUID.randomUUID();
-        System.out.println(randomNumber + "print do id deletado");
+
+        vehiclesFacade.getItensQuantity();
+
         Vehicles vehicles = new Vehicles();
         vehicles.setDrivername(driver1.getName());
         vehicles.setDriverCPF(driver1.getCPF());
@@ -75,14 +77,51 @@ public class VehiclesClient {
         vehicles.setModelName("celta 1.0 " + randomNumber);
 
         vehiclesFacade.insert(vehicles);
-
-        System.out.println("Listagem em ordem após primeiro cadastro -------------------------------------");
+        vehiclesFacade.getItensQuantity();
         vehiclesFacade.listOrder();
 
-        System.out.println("Primeira deleção -------------------------------------");
+        System.out.println("Insert second register and get Quantity and List -------------------------------------");
+        randomNumber = Math.abs(gerador.nextInt());
+        idOne = UUID.randomUUID();
+
+        vehiclesFacade.getItensQuantity();
+
+        Vehicles vehicles2 = new Vehicles();
+        vehicles2.setDrivername(driver1.getName());
+        vehicles2.setDriverCPF(driver1.getCPF());
+        vehicles2.setCreatedVehicleDate("2022-06-18");
+
+        vehicles2.setReindeer(randomNumber.toString());
+        vehicles2.setLicensePlate((idOne.toString()).substring(0, 3) + "2432");
+        vehicles2.setModelName("celta 1.0 " + randomNumber);
+
+        vehiclesFacade.insert(vehicles2);
+        vehiclesFacade.getItensQuantity();
+        vehiclesFacade.listOrder();
+
+        System.out.println("Update and list value updated -------------------------------------");
+        vehiclesFacade.findBy(randomNumber.toString());
+        Integer randomNumberToUpdate = Math.abs(gerador.nextInt());
+        UUID idOneToUpdate = UUID.randomUUID();
+
+        vehicles2.setCreatedVehicleDate("2022-06-30");
+
+        vehicles2.setLicensePlate((idOneToUpdate.toString()).substring(0, 3) + "2432");
+        vehicles2.setModelName("celta 1.0 " + randomNumberToUpdate);
+        vehiclesFacade.update(vehicles2);
+
+        System.out.println("Value after update ------------------------------------------------");
+        vehiclesFacade.findBy(randomNumber.toString());
+
+        System.out.println("First remove and list -------------------------------------");
         vehiclesFacade.delete(vehicles);
-
-        System.out.println("Listagem em ordem após primeira deleção -------------------------------------");
+        vehiclesFacade.getItensQuantity();
         vehiclesFacade.listOrder();
+
+        System.out.println("Second remove and list -------------------------------------");
+        vehiclesFacade.delete(vehicles2);
+        vehiclesFacade.listOrder();
+        vehiclesFacade.getItensQuantity();
+
     }
 }

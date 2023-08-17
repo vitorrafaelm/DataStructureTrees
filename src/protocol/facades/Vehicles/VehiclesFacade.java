@@ -11,7 +11,7 @@ public class VehiclesFacade implements FacadeInterface<Vehicles> {
 
     @Override
     public void listOrder() {
-        vehicleOperations.getTree();
+        vehicleOperations.getTreeOrder();
     }
 
     @Override
@@ -26,15 +26,14 @@ public class VehiclesFacade implements FacadeInterface<Vehicles> {
 
     @Override
     public void delete(Vehicles node) {
-        vehicleOperations.DeleteElement(node.getReindeer());
+        vehicleOperations.DeleteElement(Integer.parseInt(node.getReindeer()));
     }
 
     @Override
     public Vehicles update(Vehicles node) {
-        vehicleOperations.updateVehicleInformations(node.getReindeer(), node);
+        vehicleOperations.updateVehicleInformations(Integer.parseInt(node.getReindeer()), node);
         return null;
     }
-
     @Override
     public void insert(Vehicles node) {
         vehicleOperations.insertElement(node);
@@ -44,7 +43,7 @@ public class VehiclesFacade implements FacadeInterface<Vehicles> {
         System.out.println(vehicleOperations.getQuantity());
     }
     @Override
-    public Vehicles findBy(String value) {
-        return vehicleOperations.findElement(value);
+    public void findBy(String value) {
+        System.out.println(vehicleOperations.findElement(Integer.parseInt(value)).getValue().toString());
     }
 }

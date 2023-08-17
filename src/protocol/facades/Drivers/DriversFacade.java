@@ -5,12 +5,14 @@ import api.storage.models.Drivers;
 import api.storage.operations.driversOperations.DriversOperations;
 import protocol.interfaces.FacadeInterface;
 
+import java.net.Inet4Address;
+
 public class DriversFacade implements FacadeInterface<Drivers> {
     DriversOperations driverOperations = new DriverOperations().getOperations();
 
     @Override
     public void listOrder() {
-        driverOperations.getTree();
+        driverOperations.getTreePosOrder();
     }
 
     @Override
@@ -25,11 +27,12 @@ public class DriversFacade implements FacadeInterface<Drivers> {
 
     @Override
     public void delete(Drivers node) {
-
+        driverOperations.DeleteElement(Integer.parseInt(node.getCPF()));
     }
 
     @Override
     public Drivers update(Drivers node) {
+        driverOperations.updateVehicleInformations(Integer.parseInt(node.getCPF()), node);
         return null;
     }
 
@@ -40,11 +43,11 @@ public class DriversFacade implements FacadeInterface<Drivers> {
 
     @Override
     public void getItensQuantity() {
-        System.out.println(driverOperations.getQuantity());
+        driverOperations.getQuantity();
     }
 
     @Override
-    public Drivers findBy(String value) {
-        return driverOperations.findElement(value);
+    public void findBy(String value) {
+        driverOperations.findElement(Integer.parseInt(value));
     }
 }

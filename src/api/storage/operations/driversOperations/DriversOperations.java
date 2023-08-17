@@ -1,6 +1,8 @@
 package api.storage.operations.driversOperations;
 
 import api.storage.database.DriversTree.DriversTree;
+import api.storage.database.generic.Node;
+import api.storage.database.generic.Tree;
 import api.storage.models.Drivers;
 import api.storage.operations.interfaces.GeneralInterface;
 
@@ -8,45 +10,45 @@ import java.util.Optional;
 
 public class DriversOperations implements GeneralInterface<Drivers> {
 
-    DriversTree drivers = new DriversTree();
+    Tree driversTree = new Tree<Drivers>();
 
     @Override
-    public void getTree() {
-        drivers.order();
+    public void getTreeOrder() {
+        driversTree.order();
     }
 
     @Override
     public void getTreePreOrder() {
-
+        driversTree.preOrder();
     }
 
     @Override
     public void getTreePosOrder() {
-
+        driversTree.posOrder();
     }
 
     @Override
-    public Drivers findElement(String value) {
-        return null;
+    public Node<Drivers> findElement(Integer key) {
+        return driversTree.find(key);
     }
 
     @Override
-    public void DeleteElement(String key) {
-
+    public void DeleteElement(Integer key) {
+        driversTree.delete(key);
     }
 
     @Override
-    public void insertElement(Drivers Node) {
-        drivers.insert(Long.parseLong(Node.getCPF()), Node);
+    public void insertElement(Drivers value) {
+        driversTree.insert(Integer.parseInt(value.getCPF()), value);
     }
 
     @Override
     public int getQuantity() {
-        return 1;
+        return driversTree.countNodes();
     }
 
     @Override
-    public void updateVehicleInformations(String key, Drivers item) {
-
+    public void updateVehicleInformations(Integer key, Drivers valueToUpdate) {
+        driversTree.update(key, valueToUpdate);
     }
 }

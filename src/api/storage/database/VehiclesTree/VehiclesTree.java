@@ -1,6 +1,9 @@
 package api.storage.database.VehiclesTree;
 import api.storage.models.Vehicles;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class VehiclesTree {
     VehiclesNode root;
 
@@ -20,8 +23,11 @@ public class VehiclesTree {
         this.order(getRoot());
     }
 
+    int varqual = 0;
+
     private void order(VehiclesNode node){
         if(node != null) {
+            System.out.println(varqual++);
             this.order(node.getLeft());
             System.out.println(node.getKey() + ": " + node.getVehicle().toString());
             this.order(node.getRight());
@@ -58,6 +64,37 @@ public class VehiclesTree {
         return this.search(getRoot(), k);
     }
 
+    public void porNivel() {
+        this.porNivel(this.root);
+    }
+
+    private void porNivel(VehiclesNode no) {
+
+        VehiclesNode atual;
+
+        if(no != null) {
+
+            Queue<VehiclesNode> fila = new ArrayDeque<>();
+            fila.add(this.root);
+
+            while (fila.isEmpty() == false) {
+
+                atual = fila.remove();
+                System.out.print(atual.getKey() + "  filhos:" );
+
+                if(atual.getLeft() != null) {
+                    fila.add(atual.getLeft());
+                    System.out.print(" " + atual.getLeft().key);
+                }
+                if(atual.right != null) {
+                    fila.add(atual.right);
+                    System.out.print(" " + atual.right.key);
+                }
+                System.out.println();
+            }
+        }
+    }
+
     private VehiclesNode search(VehiclesNode r, Long k) {
         if(r == null)
             return null;
@@ -76,23 +113,18 @@ public class VehiclesTree {
     }
 
     private VehiclesNode update(VehiclesNode r, Long k, Vehicles vehicle) {
-        if (r == null) {
-            return null;
-        } else if(k < r.getKey()) {
-            return this.search(r.getLeft(), k);
-        } else if(k > r.getKey()) {
-            return this.search(r.getRight(), k);
-        } else {
-            System.out.println("ENTROU AQUI");
+        VehiclesNode nodeFound = this.search(k);
+
+        if(nodeFound != null) {
             Vehicles current = r.getVehicle();
             current.setModelName(vehicle.getModelName());
             current.setLicensePlate(vehicle.getLicensePlate());
             current.setDriverCPF(vehicle.getDriverCPF());
             current.setDrivername(vehicle.getDrivername());
-
             r.setVehicle(current);
-            return r;
         }
+
+        return r;
 
     }
 
@@ -142,7 +174,7 @@ public class VehiclesTree {
 
         node.heightNode = 1 + this.greater(this.height(node.getLeft()), this.height(node.getRight()));
 
-        return rebalance(node);
+        return node;
     }
 
     public void delete(Long k) {

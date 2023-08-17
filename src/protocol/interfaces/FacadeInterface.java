@@ -9,5 +9,5 @@ public interface FacadeInterface<T> {
     void insert(T node);
     void getItensQuantity();
 
-    T findBy(String value);
+    void findBy(String value);
 }

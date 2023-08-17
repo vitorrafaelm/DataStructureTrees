@@ -1,47 +1,41 @@
 package api.storage.operations.vehiclesOperations;
 
-import api.storage.database.VehiclesTree.VehiclesNode;
-import api.storage.database.VehiclesTree.VehiclesTree;
+import api.storage.database.generic.Node;
+import api.storage.database.generic.Tree;
 import api.storage.models.Vehicles;
 import api.storage.operations.interfaces.GeneralInterface;
 
 public class VehiclesOperations implements GeneralInterface<Vehicles> {
-    VehiclesTree vehiclesTree = new VehiclesTree();
+    Tree<Vehicles> vehiclesTree = new Tree<>();
 
     @Override
-    public void getTree() {
+    public void getTreeOrder() {
         vehiclesTree.order();
     }
 
     @Override
     public void getTreePreOrder() {
-        vehiclesTree.preOrdem();
+        vehiclesTree.preOrder();
     }
 
     @Override
     public void getTreePosOrder() {
-        vehiclesTree.posOrdem();
+        vehiclesTree.posOrder();
     }
 
     @Override
-    public Vehicles findElement(String value) {
-        VehiclesNode vehicleNode =  vehiclesTree.search(Long.parseLong(value));
-
-        if(vehicleNode != null) {
-            return vehicleNode.getVehicle();
-        }
-
-        return null;
+    public Node<Vehicles> findElement(Integer key) {
+        return vehiclesTree.find(key);
     }
 
     @Override
-    public void DeleteElement(String key) {
-        vehiclesTree.delete(Long.parseLong(key));
+    public void DeleteElement(Integer key) {
+        vehiclesTree.delete(key);
     }
 
     @Override
-    public void insertElement(Vehicles Node) {
-        vehiclesTree.insert(Long.parseLong(Node.getReindeer()), Node);
+    public void insertElement(Vehicles value) {
+        vehiclesTree.insert( Integer.parseInt(value.getReindeer()), value);
     }
 
     @Override
@@ -50,7 +44,7 @@ public class VehiclesOperations implements GeneralInterface<Vehicles> {
     }
 
     @Override
-    public void updateVehicleInformations(String key, Vehicles item) {
-        vehiclesTree.update(Long.parseLong(key), item);
+    public void updateVehicleInformations(Integer key, Vehicles valueToUpdate) {
+        vehiclesTree.update(key, valueToUpdate);
     }
 }
